@@ -1,0 +1,27 @@
+name: build
+on:
+  push:
+    branches-ignore: [ 'main' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        id: cache-dependencies
+        with:
+          python-version: '3.9'
+          cache: 'pipenv'
+          cache-dependency-path: |
+            Pipfile.lock
+
+      - name: Install pipenv
+        run: pip install pipenv
+
+      - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: pipenv install -d --deploy
+
+      - name: Run build
+        run: pipenv run run
