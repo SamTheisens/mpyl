@@ -18,3 +18,5 @@ jobs:
 
       - name: Run build
         run: pipenv run run
+        env:
+          CHANGE_ID=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
