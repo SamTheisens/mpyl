@@ -19,4 +19,4 @@ jobs:
       - name: Run build
         run: printenv
         env:
-          CHANGE_ID=${{github.event.number}}
+          CHANGE_ID: $(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
