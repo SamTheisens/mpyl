@@ -27,7 +27,7 @@ def main(log: Logger, args: argparse.Namespace):
             MpylCliParameters,
         )
 
-    config = parse_config("mpyl_config.yml")
+    config = parse_config("mpyl_config.gha.yml")
     properties = parse_config("run_properties.yml")
     run_properties = RunProperties.from_configuration(
         run_properties=properties, config=config
