@@ -17,6 +17,6 @@ jobs:
       - run: pipenv install
 
       - name: Run build
-        run: printenv
+        run: pipenv run run
         env:
-          CHANGE_ID: '1234'
+          CHANGE_ID: 1234
