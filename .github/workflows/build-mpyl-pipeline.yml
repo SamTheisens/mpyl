@@ -19,4 +19,4 @@ jobs:
       - name: Run build
         run: printenv
         env:
-          CHANGE_ID: $(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+          CHANGE_ID: '1234'
