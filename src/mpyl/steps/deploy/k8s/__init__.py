@@ -33,7 +33,8 @@ def get_namespace_from_project(project: Project) -> Optional[str]:
 def upsert_namespace(logger: Logger, step_input: Input, context: str):
     properties = step_input.run_properties
 
-    config.load_kube_config(context=context)
+    if not step_input.dry_run:
+        config.load_kube_config(context=context)
     logger.info(f"Deploying target {properties.target} and k8s context {context}")
     api = client.CoreV1Api()
 
