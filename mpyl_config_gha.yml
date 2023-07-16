@@ -2,10 +2,6 @@ cvs:
   git:
     mainBranch: 'main'
     ignorePatterns: ['*.md', '*.svg']
-    remote:
-      url: 'https://github.com/SamTheisens/mpyl/repo.git'
-      userName: !ENV ${GIT_CREDENTIALS_USR}
-      password: !ENV ${GIT_CREDENTIALS_PSW}
   github:
     repository: 'acme/repo'
     token: !ENV ${GITHUB_TOKEN}
