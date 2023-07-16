@@ -1,9 +1,9 @@
 import argparse
 import logging
+import os
 import sys
 from logging import Logger
-
-
+from pathlib import Path
 
 
 def main(log: Logger, args: argparse.Namespace):
@@ -31,8 +31,8 @@ def main(log: Logger, args: argparse.Namespace):
             MpylCliParameters,
         )
 
-    config = parse_config("mpyl_config_gha.yml")
-    properties = parse_config("run_properties.yml")
+    config = parse_config(Path(os.environ.get("MPYL_CONFIG_PATH", "mpyl_config_gha.yml")))
+    properties = parse_config(Path("run_properties.yml"))
     run_properties = RunProperties.from_configuration(
         run_properties=properties, config=config
     )
