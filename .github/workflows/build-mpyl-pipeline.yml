@@ -16,10 +16,8 @@ jobs:
         run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
       - run: pipenv install
 
-      - name: Run health
-        run: mpyl health
-        env:
-          CHANGE_ID: 1234
+      - name: 'bla'
+        run: git fetch -v -- origin +refs/heads/main:refs/heads/main
 
       - name: Run build
         run: pipenv run run
