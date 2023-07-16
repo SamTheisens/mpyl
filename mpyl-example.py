@@ -4,6 +4,8 @@ import sys
 from logging import Logger
 
 
+
+
 def main(log: Logger, args: argparse.Namespace):
     if args.local:
         from src.mpyl.reporting.targets.jira import JiraReporter
@@ -15,6 +17,8 @@ def main(log: Logger, args: argparse.Namespace):
             MpylRunConfig,
             MpylCliParameters,
         )
+        from src.mpyl.cli.commands.health.checks import perform_health_checks
+        from src.mpyl.cli import create_console_logger
 
     else:
         from mpyl.reporting.targets.jira import JiraReporter
@@ -86,6 +90,8 @@ def main(log: Logger, args: argparse.Namespace):
             check.send_report(RunResult(run_properties=run_properties, run_plan={}))
         )
 
+    console = create_console_logger(local=False, verbose=False)
+    perform_health_checks(console)
     run_result = run_mpyl(params, slack_personal)
 
     if not args.local:
