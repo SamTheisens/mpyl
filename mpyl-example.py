@@ -1,7 +1,9 @@
 import argparse
 import logging
+import os
 import sys
 from logging import Logger
+from pathlib import Path
 
 
 def main(log: Logger, args: argparse.Namespace):
@@ -15,6 +17,8 @@ def main(log: Logger, args: argparse.Namespace):
             MpylRunConfig,
             MpylCliParameters,
         )
+        from src.mpyl.cli.commands.health.checks import perform_health_checks
+        from src.mpyl.cli import create_console_logger
 
     else:
         from mpyl.reporting.targets.jira import JiraReporter
@@ -27,8 +31,8 @@ def main(log: Logger, args: argparse.Namespace):
             MpylCliParameters,
         )
 
-    config = parse_config("mpyl_config.yml")
-    properties = parse_config("run_properties.yml")
+    config = parse_config(Path(os.environ.get("MPYL_CONFIG_PATH", "mpyl_config_gha.yml")))
+    properties = parse_config(Path("run_properties.yml"))
     run_properties = RunProperties.from_configuration(
         run_properties=properties, config=config
     )
@@ -86,6 +90,8 @@ def main(log: Logger, args: argparse.Namespace):
             check.send_report(RunResult(run_properties=run_properties, run_plan={}))
         )
 
+    console = create_console_logger(local=False, verbose=False)
+    perform_health_checks(console)
     run_result = run_mpyl(params, slack_personal)
 
     if not args.local:
